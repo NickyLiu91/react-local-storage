@@ -7,14 +7,20 @@ class Home extends React.Component {
     password: ''
   }
 
+  handleChange = (event) => {
+    this.setState({
+      name: event.target.value
+    })
+  }
+
   render() {
     return(
       <div>
         <form>
-        Name <input type="text"/>
+          Name <input id="name" type="text" onChange={this.handleChange} value={this.state.name}/>
         </form>
         <form>
-        Password <input type="text"/>
+          Password <input id="password" type="text"/>
         </form>
         {this.state.name}
       </div>
