@@ -9,7 +9,7 @@ class Home extends React.Component {
 
   handleChange = (event) => {
     this.setState({
-      name: event.target.value
+      [event.target.id]: event.target.value
     })
   }
 
