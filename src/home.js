@@ -26,10 +26,13 @@ class Home extends React.Component {
   componentDidMount = () => {
     const previousName = localStorage.getItem("name")
     console.log(localStorage.getItem("name"))
+    console.log(previousName)
     const previousPassword = localStorage.getItem("password")
     console.log(localStorage.getItem("password"))
+    console.log(previousPassword)
 
-    if (previousName & previousPassword) {
+
+    if (previousName && previousPassword) {
       this.setState({
         name: previousName,
         password: previousPassword,
