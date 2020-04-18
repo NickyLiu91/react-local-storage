@@ -4,7 +4,8 @@ class Home extends React.Component {
 
   state = {
     name: '',
-    password: ''
+    password: '',
+    loggedIn: false
   }
 
   handleChange = (event) => {
@@ -14,31 +15,49 @@ class Home extends React.Component {
   }
 
   submit = () => {
-    localStorage.setItem("name", this.state.name);
-    localStorage.setItem("password", this.state.password);
-    // console.log("?")
+    this.setState({
+      loggedIn: true
+    }, () => {
+      localStorage.setItem("name", this.state.name);
+      localStorage.setItem("password", this.state.password);
+    })
+  }
+
+  componentDidMount = () => {
+    const previousName = localStorage.getItem("name")
     console.log(localStorage.getItem("name"))
-    // console.log(localStorage.getItem("name", this.state.name))
+    const previousPassword = localStorage.getItem("password")
     console.log(localStorage.getItem("password"))
-    // console.log(localStorage.getItem("password", this.state.password))
+
+    if (previousName & previousPassword) {
+      this.setState({
+        name: previousName,
+        password: previousPassword,
+        loggedIn: true
+      })
+    }
   }
 
   render() {
-    return(
-      <div>
-        <div>{this.state.name}</div>
-        <div>{this.state.password}</div>
-        <div>{localStorage.getItem("name")}</div>
-        <div>{localStorage.getItem("password")}</div>
+    if (this.state.loggedIn == false) {
+      return(
+        <div>
         <form>
-          Name <input id="name" type="text" onChange={this.handleChange} value={this.state.name}/>
+        Name <input id="name" type="text" onChange={this.handleChange} value={this.state.name}/>
         </form>
         <form>
-          Password <input id="password" type="text" onChange={this.handleChange} value={this.state.password}/>
+        Password <input id="password" type="text" onChange={this.handleChange} value={this.state.password}/>
         </form>
         <button onClick={(event) => {this.submit(event)}}>Create Account</button>
-      </div>
-    )
+        </div>
+      )
+    } else {
+      return(
+        <div>
+          Welcome {this.state.name}!
+        </div>
+      )
+    }
   }
 }
 
