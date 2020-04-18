@@ -25,12 +25,7 @@ class Home extends React.Component {
 
   componentDidMount = () => {
     const previousName = localStorage.getItem("name")
-    console.log(localStorage.getItem("name"))
-    console.log(previousName)
     const previousPassword = localStorage.getItem("password")
-    console.log(localStorage.getItem("password"))
-    console.log(previousPassword)
-
 
     if (previousName && previousPassword) {
       this.setState({
@@ -39,6 +34,16 @@ class Home extends React.Component {
         loggedIn: true
       })
     }
+  }
+
+  logOut = () => {
+    this.setState({
+      name: '',
+      password: '',
+      loggedIn: false
+    }, () => {
+      localStorage.clear()
+    })
   }
 
   render() {
@@ -54,10 +59,13 @@ class Home extends React.Component {
         <button onClick={(event) => {this.submit(event)}}>Create Account</button>
         </div>
       )
-    } else {
+    } else if (this.state.loggedIn == true && this.state.name != '' && this.state.password != '') {
       return(
         <div>
-          Welcome {this.state.name}!
+          <div>
+            Welcome {this.state.name}!
+          </div>
+          <button onClick={(event) => {this.logOut(event)}}>Log Out</button>
         </div>
       )
     }
